@@ -149,6 +149,35 @@ int PrintVisitor::visit(LiteralExp *exp)
     return 0;
 }
 
+int PrintVisitor::visit(MaxExp *exp) {
+    cout << "max(";
+    bool first = true;
+    for (Exp *e : exp->values) {
+        if (!first) {
+            cout << ", ";
+        }
+        e->accept(this);
+        first = false;
+    }
+    cout << ")";
+}
+
+int PrintVisitor::visit(UnaryExp *exp) {
+    cout << "u(";
+    exp->value->accept(this);
+    cout << ")";
+    return 0;
+}
+
+int PrintVisitor::visit(IfExp *exp) {
+    cout << "if(";
+    exp->cond->accept(this);
+    cout << ") then ";
+    exp->thenExp->accept(this);
+    cout << " else ";
+    exp->elseExp->accept(this);
+}
+
 void PrintVisitor::imprimir(Program *programa)
 {
     if (programa)
@@ -294,6 +323,14 @@ int EVALVisitor::visit(MaxExp* max) {
         }
     }
     return v;
+}
+
+int EVALVisitor::visit(UnaryExp* u) {
+    return u->value->accept(this);
+}
+
+int EVALVisitor::visit(IfExp* ie) {
+    return ie->cond->accept(this) ? ie->thenExp->accept(this) : ie->elseExp->accept(this);
 }
 
 int EVALVisitor::visit(IfExp* ie) {
@@ -488,6 +525,42 @@ int AstVisitor::visit(MinExp *exp)
         }
     }
     return 0;
+}
+
+int AstVisitor::visit(MaxExp* exp) {
+    int myId = id++;
+    out << "  node" << myId << " [label=\"max\"];\n";
+    for (Exp *e : exp->values) {
+        if (e) {
+            int childId = id;
+            e->accept(this);
+            out << "  node" << myId << " -> node" << childId << ";\n";
+        }
+    }
+}
+
+int AstVisitor::visit(IfExp* exp){
+    int myId = id++;
+    out << "  node" << myId << " [label=\"if\"];\n";
+    if (exp->cond) {
+        int childId = id;
+        exp->cond->accept(this);
+        out << "  node" << myId << " -> node" << childId << ";\n";
+    }
+    if (exp->thenExp) {
+        int childId = id;
+        exp->thenExp->accept(this);
+        out << "  node" << myId << " -> node" << childId << ";\n";
+    }
+}
+
+int AstVisitor::visit(UnaryExp* exp) {
+    int myId = id++;
+    out << "  node" << myId << " [label=\"u\"];\n";
+    if (exp->value) {
+        int childId = id;
+        exp->value->accept(this);
+    }
 }
 
 void AstVisitor::arbol(Program *programa)
