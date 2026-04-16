@@ -1,10 +1,22 @@
 Scanner
 
-TOKEN(ID, "xd")
+TOKEN(ID, "x")
 TOKEN(ASSIGN, "=")
-TOKEN(NUM, "4")
-TOKEN(MUL, "*")
 TOKEN(NUM, "5")
+TOKEN(SEMICOLON, ";")
+TOKEN(ID, "y")
+TOKEN(ASSIGN, "=")
+TOKEN(MINUS, "-")
+TOKEN(LPAREN, "(")
+TOKEN(NUM, "8")
+TOKEN(RPAREN, ")")
+TOKEN(SEMICOLON, ";")
+TOKEN(PRINT, "print")
+TOKEN(LPAREN, "(")
+TOKEN(ID, "x")
+TOKEN(PLUS, "+")
+TOKEN(ID, "y")
+TOKEN(RPAREN, ")")
 TOKEN(END)
 
 Scanner exitoso

@@ -7,6 +7,7 @@
 using namespace std;
 unordered_map<std::string, int> memoria;
 const int MAX_INT = 2147483647;
+const int MIN_INT = -2147483648;
 ///////////////////////////////////////////////////////////////////////////////////
 int BinaryExp::accept(Visitor *visitor)
 {
@@ -72,15 +73,15 @@ int LiteralExp::accept(Visitor *visitor)
 // asumimos que existen la firma de las siguientes calses
 // MaxExp(CExp, CExp,...), IfExp, UnaryExp
 int MaxExp::accept(Visitor *visitor) {
-    return->visitor->visit(this);
+    return visitor->visit(this);
 }
 
 int IfExp::accept(Visitor *visitor) {
-    return->visitor->visit(this);
+    return visitor->visit(this);
 }
 
 int UnaryExp::accept(Visitor *visitor) {
-    return->visitor->visit(this);
+    return visitor->visit(this);
 }
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -160,6 +161,7 @@ int PrintVisitor::visit(MaxExp *exp) {
         first = false;
     }
     cout << ")";
+    return 0;
 }
 
 int PrintVisitor::visit(UnaryExp *exp) {
@@ -176,6 +178,7 @@ int PrintVisitor::visit(IfExp *exp) {
     exp->thenExp->accept(this);
     cout << " else ";
     exp->elseExp->accept(this);
+    return 0;
 }
 
 void PrintVisitor::imprimir(Program *programa)
@@ -315,11 +318,11 @@ int EVALVisitor::visit(PrintStmt*  p)
 }
 
 int EVALVisitor::visit(MaxExp* max) {
-    int v = 0;
+    int v = MIN_INT;
     for (auto e : max->values) {
-        v = e->accept(this);
-        if (v > max->value) {
-            max->value = v;
+        int val = e->accept(this);
+        if (val > v) {
+            v = val;
         }
     }
     return v;
@@ -331,10 +334,6 @@ int EVALVisitor::visit(UnaryExp* u) {
 
 int EVALVisitor::visit(IfExp* ie) {
     return ie->cond->accept(this) ? ie->thenExp->accept(this) : ie->elseExp->accept(this);
-}
-
-int EVALVisitor::visit(IfExp* ie) {
-
 }
 
 int EVALVisitor::visit(IdExp *p)
@@ -511,6 +510,12 @@ int AstVisitor::visit(AbsExp *exp)
     return 0;
 }
 
+int AstVisitor::visit(LiteralExp*){
+    int myId = id++;
+    out << "  node" << myId << " [label=\"literal\"];\n";
+    return 0;
+}
+
 int AstVisitor::visit(MinExp *exp)
 {
     int myId = id++;
@@ -537,6 +542,7 @@ int AstVisitor::visit(MaxExp* exp) {
             out << "  node" << myId << " -> node" << childId << ";\n";
         }
     }
+    return 0;
 }
 
 int AstVisitor::visit(IfExp* exp){
@@ -552,6 +558,7 @@ int AstVisitor::visit(IfExp* exp){
         exp->thenExp->accept(this);
         out << "  node" << myId << " -> node" << childId << ";\n";
     }
+    return 0;
 }
 
 int AstVisitor::visit(UnaryExp* exp) {
@@ -561,6 +568,7 @@ int AstVisitor::visit(UnaryExp* exp) {
         int childId = id;
         exp->value->accept(this);
     }
+    return 0;
 }
 
 void AstVisitor::arbol(Program *programa)

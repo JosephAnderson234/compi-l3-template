@@ -1,8 +1,4 @@
 === STDOUT ===
 Parseo exitoso
-Codigo:
-x = 1 + 2 + 3
-
-Interprete:0
 
 === STDERR ===

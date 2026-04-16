@@ -1,12 +1,20 @@
 Scanner
 
-TOKEN(ID, "a")
+TOKEN(ID, "m")
 TOKEN(ASSIGN, "=")
-TOKEN(NUM, "2")
-TOKEN(MUL, "*")
+TOKEN(Max, "max")
+TOKEN(LPAREN, "(")
+TOKEN(NUM, "7")
+TOKEN(COMMA, ",")
 TOKEN(NUM, "3")
-TOKEN(PLUS, "+")
-TOKEN(NUM, "4")
+TOKEN(COMMA, ",")
+TOKEN(NUM, "10")
+TOKEN(RPAREN, ")")
+TOKEN(SEMICOLON, ";")
+TOKEN(PRINT, "print")
+TOKEN(LPAREN, "(")
+TOKEN(ID, "m")
+TOKEN(RPAREN, ")")
 TOKEN(END)
 
 Scanner exitoso
