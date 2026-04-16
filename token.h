@@ -29,6 +29,8 @@ public:
         NUM,     // Número
         ERR,     // Error
         ID,      // ID
+        Max,     // Max
+        If_Exp,
         END      // Fin de entrada
     };
 

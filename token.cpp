@@ -43,6 +43,8 @@ ostream& operator<<(ostream& outs, const Token& tok) {
         case Token::SQRT:    outs << "TOKEN(SQRT, \""    << tok.text << "\")"; break;
         case Token::ID:    outs << "TOKEN(ID, \""    << tok.text << "\")"; break;
         case Token::NUM:    outs << "TOKEN(NUM, \""    << tok.text << "\")"; break;
+        case Token::Max:    outs << "TOKEN(Max, \""    << tok.text << "\")"; break;
+        case Token::If_Exp:    outs << "TOKEN(If_Exp, \""    << tok.text << "\")"; break;
         case Token::ERR:    outs << "TOKEN(ERR, \""    << tok.text << "\")"; break;
         case Token::END:    outs << "TOKEN(END)"; break;
     }
