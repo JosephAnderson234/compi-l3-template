@@ -69,9 +69,26 @@ int LiteralExp::accept(Visitor *visitor)
 {
     return visitor->visit(this);
 }
+// asumimos que existen la firma de las siguientes calses
+// MaxExp(CExp, CExp,...), IfExp, UnaryExp
+int MaxExp::accept(Visitor *visitor) {
+    return->visitor->visit(this);
+}
 
+int IfExp::accept(Visitor *visitor) {
+    return->visitor->visit(this);
+}
+
+int UnaryExp::accept(Visitor *visitor) {
+    return->visitor->visit(this);
+}
 ///////////////////////////////////////////////////////////////////////////////////
 
+int PrintVisitor::visit(MaxExp *programa) {
+
+}
+
+///////////////////////////////////////////////////////////////////
 int PrintVisitor::visit(BinaryExp *exp)
 {
     exp->left->accept(this);

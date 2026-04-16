@@ -137,6 +137,15 @@ public:
     AssignStmt(vector<Exp*> es, vector<string> ids);
 };
 
+class MaxExp : public Exp
+{
+public:
+    vector<Exp *> values;
+    int accept(Visitor *visitor);
+    MaxExp(Vector<Exp*> v);
+    ~MaxExp();
+};
+
 class Program
 {
 
