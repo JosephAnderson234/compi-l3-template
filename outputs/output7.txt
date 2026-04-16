@@ -1,4 +1,8 @@
 === STDOUT ===
+Parseo exitoso
+Codigo:
+j = 1 + 3 * 4 + 5
+
+Interprete:0
 
 === STDERR ===
-Error al parsear: Error sintáctico

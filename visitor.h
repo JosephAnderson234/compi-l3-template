@@ -60,6 +60,23 @@ public:
     void interprete(Program* program);
 };
 
+class AstVisitor : public Visitor {
+public:
+    ostream out{nullptr};
+    int id;
+    int visit(BinaryExp* exp) override;
+    int visit(NumberExp* exp) override;
+    int visit(SqrtExp* exp) override;
+    int visit(IdExp* exp) override;
+    int visit(Program* p) override;
+    int visit(PrintStmt* stm) override;
+    int visit(AssignStmt* stm) override;
+    int visit(PowExp* exp) override;
+    int visit(AbsExp* exp) override;
+    int visit(MinExp* exp) override;
+
+    void arbol(Program* program);
+};
 
 
 #endif // VISITOR_H

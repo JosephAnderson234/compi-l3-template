@@ -14,9 +14,9 @@ int BinaryExp::accept(Visitor *visitor)
 }
 
 int NumberExp::accept(Visitor *visitor)
-{
     return visitor->visit(this);
 }
+
 
 int SqrtExp::accept(Visitor *visitor)
 {
@@ -28,10 +28,12 @@ int PowExp::accept(Visitor *visitor)
     return visitor->visit(this);
 }
 
+
 int AbsExp::accept(Visitor *visitor)
 {
     return visitor->visit(this);
 }
+
 
 int MinExp::accept(Visitor *visitor)
 {
@@ -43,20 +45,25 @@ int IdExp::accept(Visitor *visitor)
     return visitor->visit(this);
 }
 
+
 int Program::accept(Visitor *visitor)
 {
     return visitor->visit(this);
 }
 
+
 int PrintStmt::accept(Visitor *visitor)
+
 {
     return visitor->visit(this);
 }
+
 
 int AssignStmt::accept(Visitor *visitor)
 {
     return visitor->visit(this);
 }
+
 
 int LiteralExp::accept(Visitor *visitor)
 {
@@ -121,6 +128,7 @@ int PrintVisitor::visit(MinExp *exp)
     cout << ")";
     return 0;
 }
+
 
 int PrintVisitor::visit(LiteralExp *exp)
 {
@@ -209,6 +217,7 @@ int EVALVisitor::visit(MinExp *exp)
     return minValue;
 }
 
+
 int EVALVisitor::visit(LiteralExp *exp)
 {
     return 0; // No se evalúa a un número, pero se devuelve 0 para cumplir con la firma del método
@@ -240,6 +249,7 @@ int EVALVisitor::visit(AssignStmt *p)
     memoria[p->id] = v;
     return 0;
 }
+
 
 int EVALVisitor::visit(PrintStmt*  p)
 {
@@ -302,4 +312,159 @@ int PrintVisitor::visit(PrintStmt *p)
     }
     cout << ")" << endl;
     return 0;
+}
+
+///////For AstVisitor support
+int AstVisitor::visit(BinaryExp *exp)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\""
+        << Exp::binopToChar(exp->op) << "\"];\n";
+
+    if (exp->left)
+    {
+        int leftId = id;
+        exp->left->accept(this);
+        out << "  node" << myId << " -> node" << leftId << ";\n";
+    }
+
+    if (exp->right)
+    {
+        int rightId = id;
+        exp->right->accept(this);
+        out << "  node" << myId << " -> node" << rightId << ";\n";
+    }
+
+    return 0;
+}
+
+int AstVisitor::visit(NumberExp *exp)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\"" << exp->value << "\"];\n";
+    return 0;
+}
+
+int AstVisitor::visit(SqrtExp *exp)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\"sqrt\"];\n";
+    if (exp->value)
+    {
+        int childId = id;
+        exp->value->accept(this); // genera el nodo hijo
+        out << "  node" << myId << " -> node" << childId << ";\n";
+    }
+    return 0;
+}
+
+int AstVisitor::visit(IdExp *exp)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\"" << exp->id << "\"];\n";
+    return 0;
+}
+
+int AstVisitor::visit(Program *p)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\"Program\"];\n";
+    for (auto stmt : p->slist)
+    {
+        int childId = id;
+        stmt->accept(this);
+        out << "  node" << myId << " -> node" << childId << ";\n";
+    }
+    return 0;
+}
+
+int AstVisitor::visit(PrintStmt *stm)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\"PrintStmt\"];\n";
+    if (stm->e)
+    {
+        int childId = id;
+        stm->e->accept(this);
+        out << "  node" << myId << " -> node" << childId << ";\n";
+    }
+    return 0;
+}
+
+int AstVisitor::visit(AssignStmt *stm)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\"AssignStmt: " << stm->id << "\"];\n";
+    if (stm->e)    {
+        int childId = id;
+        stm->e->accept(this);
+        out << "  node" << myId << " -> node" << childId << ";\n";
+    }
+    return 0;
+}
+
+int AstVisitor::visit(PowExp *exp)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\"pow\"];\n";
+    if (exp->base)
+    {
+        int baseId = id;
+        exp->base->accept(this);
+        out << "  node" << myId << " -> node" << baseId << ";\n";
+    }
+    if (exp->exponent)
+    {
+        int expId = id;
+        exp->exponent->accept(this);
+        out << "  node" << myId << " -> node" << expId << ";\n";
+    }
+    return 0;
+}
+
+int AstVisitor::visit(AbsExp *exp)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\"abs\"];\n";
+    if (exp->value)
+    {
+        int childId = id;
+        exp->value->accept(this);
+        out << "  node" << myId << " -> node" << childId << ";\n";
+    }
+    return 0;
+}
+
+int AstVisitor::visit(MinExp *exp)
+{
+    int myId = id++;
+    out << "  node" << myId << " [label=\"min\"];\n";
+    for (Exp *e : exp->values)
+    {
+        if (e)
+        {
+            int childId = id;
+            e->accept(this);
+            out << "  node" << myId << " -> node" << childId << ";\n";
+        }
+    }
+    return 0;
+}
+
+void AstVisitor::arbol(Program *programa)
+{
+    ofstream file("ast.dot");
+    out.rdbuf(file.rdbuf()); // redirige el ostream interno al archivo
+    id = 0;
+    out << "digraph AST {\n";
+    if (!programa)
+    {
+        // Árbol vacío
+        out << "  empty [label=\"<arbol vacio>\"];\n";
+    }
+    else
+    {
+        programa->accept(this);
+    }
+    out << "}\n";
 }
