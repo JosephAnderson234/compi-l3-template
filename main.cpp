@@ -49,6 +49,8 @@ int main(int argc, const char* argv[]) {
         cerr << "Error al parsear: " << e.what() << endl;
         ast = nullptr; 
     }
+    AstVisitor arbol;
+    arbol.arbol(ast);
 
     PrintVisitor impresion;
     impresion.imprimir(ast);

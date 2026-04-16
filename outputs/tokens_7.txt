@@ -1,5 +1,7 @@
 Scanner
 
+TOKEN(ID, "j")
+TOKEN(ASSIGN, "=")
 TOKEN(LPAREN, "(")
 TOKEN(NUM, "1")
 TOKEN(PLUS, "+")

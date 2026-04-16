@@ -1,5 +1,7 @@
 Scanner
 
+TOKEN(ID, "a")
+TOKEN(ASSIGN, "=")
 TOKEN(NUM, "2")
 TOKEN(MUL, "*")
 TOKEN(NUM, "3")
