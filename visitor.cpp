@@ -84,10 +84,6 @@ int UnaryExp::accept(Visitor *visitor) {
 }
 ///////////////////////////////////////////////////////////////////////////////////
 
-int PrintVisitor::visit(MaxExp *programa) {
-
-}
-
 ///////////////////////////////////////////////////////////////////
 int PrintVisitor::visit(BinaryExp *exp)
 {
@@ -287,6 +283,21 @@ int EVALVisitor::visit(PrintStmt*  p)
     }
     cout << endl;
     return 0;
+}
+
+int EVALVisitor::visit(MaxExp* max) {
+    int v = 0;
+    for (auto e : max->values) {
+        v = e->accept(this);
+        if (v > max->value) {
+            max->value = v;
+        }
+    }
+    return v;
+}
+
+int EVALVisitor::visit(IfExp* ie) {
+
 }
 
 int EVALVisitor::visit(IdExp *p)
