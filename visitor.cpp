@@ -13,7 +13,7 @@ int BinaryExp::accept(Visitor *visitor)
     return visitor->visit(this);
 }
 
-int NumberExp::accept(Visitor *visitor)
+int NumberExp::accept(Visitor *visitor){
     return visitor->visit(this);
 }
 
@@ -245,8 +245,11 @@ int EVALVisitor::visit(Program *p)
 
 int EVALVisitor::visit(AssignStmt *p)
 {
-    int v = p->e->accept(this);
-    memoria[p->id] = v;
+    for (size_t i = 0; i < p->exs.size(); ++i)
+    {
+        int v = p->exs[i]->accept(this);
+        memoria[p->ids[i]] = v;
+    }
     return 0;
 }
 
@@ -291,8 +294,12 @@ int PrintVisitor::visit(Program *p)
 
 int PrintVisitor::visit(AssignStmt *p)
 {
-    cout << p->id << " = ";
-    p->e->accept(this);
+    for (size_t i = 0; i < p->exs.size(); ++i)
+    {
+        cout << p->ids[i] << " = ";
+        p->exs[i]->accept(this);
+        cout << endl;
+    }
     cout << endl;
     return 0;
 }
@@ -382,11 +389,14 @@ int AstVisitor::visit(PrintStmt *stm)
 {
     int myId = id++;
     out << "  node" << myId << " [label=\"PrintStmt\"];\n";
-    if (stm->e)
+    for (Exp *e : stm->values)
     {
-        int childId = id;
-        stm->e->accept(this);
-        out << "  node" << myId << " -> node" << childId << ";\n";
+        if (e)
+        {
+            int childId = id;
+            e->accept(this);
+            out << "  node" << myId << " -> node" << childId << ";\n";
+        }
     }
     return 0;
 }
@@ -394,11 +404,12 @@ int AstVisitor::visit(PrintStmt *stm)
 int AstVisitor::visit(AssignStmt *stm)
 {
     int myId = id++;
-    out << "  node" << myId << " [label=\"AssignStmt: " << stm->id << "\"];\n";
-    if (stm->e)    {
+    out << "  node" << myId << " [label=\"AssignStmt\"];\n";
+    for (size_t i = 0; i < stm->exs.size(); ++i)
+    {
         int childId = id;
-        stm->e->accept(this);
-        out << "  node" << myId << " -> node" << childId << ";\n";
+        stm->exs[i]->accept(this);
+        out << "  node" << myId << " -> node" << childId << " [label=\"" << stm->ids[i] << "\"];\n";
     }
     return 0;
 }

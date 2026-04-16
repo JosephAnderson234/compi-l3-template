@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+#include <vector>
 #include <ostream>
 
 using namespace std;
@@ -130,10 +131,10 @@ class AssignStmt : public Stmt
 
 public:
     int accept(Visitor *visitor);
-    Exp *e;
-    string id;
+    vector<Exp *> exs;
+    vector<string> ids;
     ~AssignStmt();
-    AssignStmt(Exp *exp, string ide);
+    AssignStmt(vector<Exp*> es, vector<string> ids);
 };
 
 class Program
