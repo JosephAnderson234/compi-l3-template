@@ -241,6 +241,31 @@ Exp *Parser::parseF()
         Exp *exponent = parseCExp();
         match(Token::RPAREN);
         return new PowExp(base, exponent);
+    } else if (match(Token::If_Exp)){
+        match(Token::LPAREN);
+        Exp *condition = parseCExp();
+        match(Token::COMMA);
+        Exp *trueBranch = parseCExp();
+        match(Token::COMMA);
+        Exp *falseBranch = parseCExp();
+        match(Token::RPAREN);
+        return new IfExp(condition, trueBranch, falseBranch);
+    } else if (match(Token::MINUS)){
+        match(Token::LPAREN);
+        Exp *value = parseCExp();
+        match(Token::RPAREN);
+        return new UnaryExp(value, NEG_OP);
+    } else if (match(Token::Max)){
+        match(Token::LPAREN);
+        vector<Exp *> values;
+        values.push_back(parseCExp());
+        while (match(Token::COMMA))
+        {
+            values.push_back(parseCExp());
+        }
+        match(Token::RPAREN);
+
+        return new MaxExp(values);
     }
     else
     {

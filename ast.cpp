@@ -61,6 +61,26 @@ MinExp::~MinExp() {
 }
 
 
+MaxExp::MaxExp(vector<Exp*> v) : values(v) {}
+MaxExp::~MaxExp() {
+    for (Exp* exp : values) {
+        delete exp;
+    }
+}
+
+
+IfExp::IfExp(Exp *c, Exp *t, Exp *e) : cond(c), thenExp(t), elseExp(e) {}
+IfExp::~IfExp() {
+    delete cond;
+    delete thenExp;
+    delete elseExp;
+}
+
+UnaryExp::UnaryExp(Exp* v, UnaryOp o) : value(v), op(o) {}
+UnaryExp::~UnaryExp() {
+    delete value;
+}
+
 LiteralExp::LiteralExp(string v) : value(v) {}
 LiteralExp::~LiteralExp() {}
 
