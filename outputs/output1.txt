@@ -2,9 +2,9 @@
 Parseo exitoso
 Codigo:
 x = abs(15 - 5000)
-print(x)
+print(x, 12)
 
-Interprete:4985
+Interprete:4985 12 
 0
 
 === STDERR ===

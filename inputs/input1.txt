@@ -1,1 +1,1 @@
-x=abs(15-5000); print(x)
+x=abs(15-5000); print(x, "12")

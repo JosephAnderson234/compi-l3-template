@@ -98,6 +98,15 @@ public:
     ~MinExp();
 };
 
+class LiteralExp : public Exp
+{
+public:
+    string value;
+    int accept(Visitor *visitor);
+    LiteralExp(string v);
+    ~LiteralExp();
+};
+
 class Stmt
 {
 
@@ -111,9 +120,9 @@ class PrintStmt : public Stmt
 
 public:
     int accept(Visitor *visitor);
-    Exp *e;
+    list<Exp*> values;
     ~PrintStmt();
-    PrintStmt(Exp *exp);
+    PrintStmt(list<Exp*> exp);
 };
 
 class AssignStmt : public Stmt

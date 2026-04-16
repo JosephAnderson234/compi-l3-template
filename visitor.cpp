@@ -14,9 +14,9 @@ int BinaryExp::accept(Visitor *visitor)
 }
 
 int NumberExp::accept(Visitor *visitor)
-{
     return visitor->visit(this);
 }
+
 
 int SqrtExp::accept(Visitor *visitor)
 {
@@ -28,10 +28,12 @@ int PowExp::accept(Visitor *visitor)
     return visitor->visit(this);
 }
 
+
 int AbsExp::accept(Visitor *visitor)
 {
     return visitor->visit(this);
 }
+
 
 int MinExp::accept(Visitor *visitor)
 {
@@ -43,17 +45,27 @@ int IdExp::accept(Visitor *visitor)
     return visitor->visit(this);
 }
 
+
 int Program::accept(Visitor *visitor)
 {
     return visitor->visit(this);
 }
 
+
 int PrintStmt::accept(Visitor *visitor)
+
 {
     return visitor->visit(this);
 }
 
+
 int AssignStmt::accept(Visitor *visitor)
+{
+    return visitor->visit(this);
+}
+
+
+int LiteralExp::accept(Visitor *visitor)
 {
     return visitor->visit(this);
 }
@@ -114,6 +126,13 @@ int PrintVisitor::visit(MinExp *exp)
         first = false;
     }
     cout << ")";
+    return 0;
+}
+
+
+int PrintVisitor::visit(LiteralExp *exp)
+{
+    cout << exp->value;
     return 0;
 }
 
@@ -198,6 +217,12 @@ int EVALVisitor::visit(MinExp *exp)
     return minValue;
 }
 
+
+int EVALVisitor::visit(LiteralExp *exp)
+{
+    return 0; // No se evalúa a un número, pero se devuelve 0 para cumplir con la firma del método
+}
+
 void EVALVisitor::interprete(Program *programa)
 {
     if (programa)
@@ -225,10 +250,22 @@ int EVALVisitor::visit(AssignStmt *p)
     return 0;
 }
 
-int EVALVisitor::visit(PrintStmt *p)
+
+int EVALVisitor::visit(PrintStmt*  p)
 {
-    int v = p->e->accept(this);
-    cout << v << endl;
+    for (Exp *e : p->values)
+    {
+        if (LiteralExp *lit = dynamic_cast<LiteralExp *>(e))
+        {
+            cout << lit->value << " ";
+        }
+        else
+        {
+            int v = e->accept(this);
+            cout << v << " ";
+        }
+    }
+    cout << endl;
     return 0;
 }
 
@@ -263,7 +300,16 @@ int PrintVisitor::visit(AssignStmt *p)
 int PrintVisitor::visit(PrintStmt *p)
 {
     cout << "print(";
-    p->e->accept(this);
+    bool first = true;
+    for (Exp *e : p->values)
+    {
+        if (!first)
+        {
+            cout << ", ";
+        }
+        e->accept(this);
+        first = false;
+    }
     cout << ")" << endl;
     return 0;
 }

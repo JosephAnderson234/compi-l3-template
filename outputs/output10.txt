@@ -4,7 +4,7 @@ Codigo:
 x = 2 ** 5 + sqrt(5 + 3) + 10
 print(x)
 
-Interprete:44
+Interprete:44 
 0
 
 === STDERR ===
