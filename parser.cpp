@@ -96,8 +96,8 @@ Stmt *Parser::parseStmt()
         vector <Exp *> exs;
         vector <string> ids;
         string id = previous->text;
+        ids.push_back(id);
         if (match(Token::COMMA)){
-            ids.push_back(id);
             do {
                 if (!match(Token::ID)) {
                     throw runtime_error("Error sintáctico: se esperaba un ID");
@@ -116,6 +116,13 @@ Stmt *Parser::parseStmt()
                     }
                 }
             }
+            return new AssignStmt(exs, ids);
+        } else if (match(Token::ASSIGN)) {
+            exs.push_back(parseCExp());
+
+            return new AssignStmt(exs, ids);
+        } else {
+            throw runtime_error("Error sintáctico: se esperaba ',' o '='");
         }
     }
     if (match(Token::PRINT))

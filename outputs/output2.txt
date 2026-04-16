@@ -1,4 +1,13 @@
 === STDOUT ===
+Parseo exitoso
+Codigo:
+x = 5
+
+y = u(8)
+
+print(x + y)
+
+Interprete:13 
+0
 
 === STDERR ===
-Error al parsear: Error sintáctico

@@ -1,4 +1,16 @@
 === STDOUT ===
+Parseo exitoso
+Codigo:
+m = u(7 + 5)
+
+n = 2
+
+r1 = m * n
+r2 = m / n
+
+print(max(r1, r2, m + n))
+
+Interprete:24 
+0
 
 === STDERR ===
-Error al parsear: Error sintáctico

@@ -1,4 +1,18 @@
 === STDOUT ===
+Parseo exitoso
+Codigo:
+a = 4
+
+b = 9
+
+c = 16
+
+x = sqrt(a) + sqrt(b)
+y = max(a, b, c)
+
+print(x + y)
+
+Interprete:21 
+0
 
 === STDERR ===
-Error al parsear: Error sintáctico

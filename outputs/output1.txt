@@ -1,4 +1,11 @@
 === STDOUT ===
+Parseo exitoso
+Codigo:
+x = 5
+
+print(x)
+
+Interprete:5 
+0
 
 === STDERR ===
-Error al parsear: Error sintáctico

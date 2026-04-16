@@ -1,3 +1,11 @@
 digraph AST {
-  empty [label="<arbol vacio>"];
+  node0 [label="Program"];
+  node1 [label="AssignStmt"];
+  node2 [label="5"];
+  node1 -> node2 [label="x"];
+  node0 -> node1;
+  node3 [label="PrintStmt"];
+  node4 [label="x"];
+  node3 -> node4;
+  node0 -> node3;
 }

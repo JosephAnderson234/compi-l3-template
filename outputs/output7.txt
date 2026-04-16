@@ -1,4 +1,13 @@
 === STDOUT ===
+Parseo exitoso
+Codigo:
+p = max(3, 7, 2, 9, 4)
+
+q = sqrt(p + 6 * p + 6)
+
+print(p + q)
+
+Interprete:24 
+0
 
 === STDERR ===
-Error al parsear: Error sintáctico

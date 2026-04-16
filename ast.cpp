@@ -93,6 +93,9 @@ Stmt::~Stmt(){}
 PrintStmt::~PrintStmt() {}
 AssignStmt::~AssignStmt() {}
 PrintStmt::PrintStmt(list<Exp*> exp) {values=exp;}
-AssignStmt::AssignStmt(vector<Exp*> es, vector<string> ids) {exs=es;ids=ids;}
+AssignStmt::AssignStmt(vector<Exp*> es, vector<string> ids) {
+    exs = es;
+    this->ids = ids;
+}
 
 

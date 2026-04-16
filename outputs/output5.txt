@@ -1,4 +1,15 @@
 === STDOUT ===
+Parseo exitoso
+Codigo:
+x = 10
+
+y = 4
+
+m = max(x, y + 5, 20)
+
+print(m)
+
+Interprete:20 
+0
 
 === STDERR ===
-Error al parsear: Error sintáctico
