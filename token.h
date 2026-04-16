@@ -18,7 +18,12 @@ public:
         LPAREN,  // (
         ASSIGN,
         SEMICOLON,
+        COMMA,
         PRINT,
+        POW_OP,
+        ABS_OP,
+        MIN_OP,
+        LITERAL,
         RPAREN,  // )
         SQRT,    // sqrt
         NUM,     // Número

@@ -47,6 +47,19 @@ Token* Scanner::nextToken() {
             current++;
         token = new Token(Token::NUM, input, first, current - first);
     }
+    // Literales entre comillas
+    else if (c == '"') {
+        current++;
+        while (current < input.length() && input[current] != '"')
+            current++;
+        if (current < input.length()) {
+            token = new Token(Token::LITERAL, input, first + 1, current - first - 1);
+            current++; // Saltar la comilla de cierre
+        } else {
+            token = new Token(Token::ERR);
+        }
+    }
+
     // ID
     else if (isalpha(c)) {
         current++;
@@ -55,15 +68,19 @@ Token* Scanner::nextToken() {
         string lexema = input.substr(first, current - first);
         if (lexema=="sqrt") return new Token(Token::SQRT, input, first, current - first);
         if (lexema=="print") return new Token(Token::PRINT, input, first, current - first);
+        if (lexema=="pow") return new Token(Token::POW_OP, input, first, current - first);
+        if (lexema=="abs") return new Token(Token::ABS_OP, input, first, current - first);
+        if (lexema=="min") return new Token(Token::MIN_OP, input, first, current - first);
         else return new Token(Token::ID, input, first, current - first);
     }
     // Operadores
-    else if (strchr("+/-*();=", c)) {
+    else if (strchr("+/-*();=,", c)) {
         switch (c) {
             case '+': token = new Token(Token::PLUS,  c); break;
             case '-': token = new Token(Token::MINUS, c); break;
             case ';': token = new Token(Token::SEMICOLON, c); break;
             case '=': token = new Token(Token::ASSIGN, c); break;
+            case ',': token = new Token(Token::COMMA, c); break;
             case '*': 
             if (input[current+1]=='*')
             {

@@ -1,5 +1,7 @@
 Scanner
 
+TOKEN(ID, "x")
+TOKEN(ASSIGN, "=")
 TOKEN(NUM, "2")
 TOKEN(POW, "**")
 TOKEN(NUM, "5")
@@ -12,6 +14,11 @@ TOKEN(NUM, "3")
 TOKEN(RPAREN, ")")
 TOKEN(PLUS, "+")
 TOKEN(NUM, "10")
+TOKEN(SEMICOLON, ";")
+TOKEN(PRINT, "print")
+TOKEN(LPAREN, "(")
+TOKEN(ID, "x")
+TOKEN(RPAREN, ")")
 TOKEN(END)
 
 Scanner exitoso

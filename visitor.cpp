@@ -7,6 +7,7 @@
 
 using namespace std;
 unordered_map<std::string, int> memoria;
+const int MAX_INT = 2147483647;
 ///////////////////////////////////////////////////////////////////////////////////
 int BinaryExp::accept(Visitor* visitor) {
     return visitor->visit(this);
@@ -17,6 +18,18 @@ int NumberExp::accept(Visitor* visitor) {
 }
 
 int SqrtExp::accept(Visitor* visitor) {
+    return visitor->visit(this);
+}
+
+int PowExp::accept(Visitor* visitor) {
+    return visitor->visit(this);
+}
+
+int AbsExp::accept(Visitor* visitor) {
+    return visitor->visit(this);
+}
+
+int MinExp::accept(Visitor* visitor) {
     return visitor->visit(this);
 }
 
@@ -54,6 +67,36 @@ int PrintVisitor::visit(SqrtExp* exp) {
     cout << "sqrt(";
     exp->value->accept(this);
     cout <<  ")";
+    return 0;
+}
+
+int PrintVisitor::visit(PowExp* exp) {
+    cout << "pow(";
+    exp->base->accept(this);
+    cout << ", ";
+    exp->exponent->accept(this);
+    cout << ")";
+    return 0;
+}
+
+int PrintVisitor::visit(AbsExp* exp) {
+    cout << "abs(";
+    exp->value->accept(this);
+    cout << ")";
+    return 0;
+}
+
+int PrintVisitor::visit(MinExp* exp) {
+    cout << "min(";
+    bool first = true;
+    for (Exp* e : exp->values) {
+        if (!first) {
+            cout << ", ";
+        }
+        e->accept(this);
+        first = false;
+    }
+    cout << ")";
     return 0;
 }
 
@@ -109,6 +152,24 @@ int EVALVisitor::visit(SqrtExp* exp) {
     return floor(sqrt( exp->value->accept(this)));
 }
 
+int EVALVisitor::visit(PowExp* exp) {
+    return pow(exp->base->accept(this), exp->exponent->accept(this));
+}
+
+int EVALVisitor::visit(AbsExp* exp) {
+    return abs(exp->value->accept(this));
+}
+
+int EVALVisitor::visit(MinExp* exp) {
+    int minValue = MAX_INT;
+    for (Exp* e : exp->values) {
+        int val = e->accept(this);
+        if (val < minValue) {
+            minValue = val;
+        }
+    }
+    return minValue;
+}
 
 void EVALVisitor::interprete(Program* programa){
     if (programa)

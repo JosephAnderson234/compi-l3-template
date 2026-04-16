@@ -22,6 +22,24 @@ F         ::= NUM
            | 'sqrt' '(' CExp ')'
 ```
 
+Voy a extenderlo a 
+```ebnf
+Program   ::= Stmt (';' Stmt)*
+Stmt      ::= ID '=' CExp
+           |  'print' '(' PrintArg (',' PrintArg)* ')' 
+PrintArg ::= CExp | String
+CExp      ::= E (('+' | '-') E)*
+E         ::= T (('*' | '/') T)*
+T         ::= F ('**' F)?
+F         ::= NUM
+           | ID
+           | '(' CExp ')'
+           | 'sqrt' '(' CExp ')'
+           | 'pow' '(' CExp ',' CExp ')'
+           | 'abs' '(' CExp ')'
+           | 'min' '(' CExp (',' CExp)* ')'
+```
+
 ## Tokens y construcciones soportadas
 
 - Variables: `ID`

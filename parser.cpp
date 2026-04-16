@@ -156,6 +156,27 @@ Exp* Parser::parseF() {
         e = parseCExp();
         match(Token::RPAREN);
         return new SqrtExp(e);
+    } else if (match(Token::ABS_OP)) {
+        match(Token::LPAREN);
+        e = parseCExp();
+        match(Token::RPAREN);
+        return new AbsExp(e);
+    } else if (match(Token::MIN_OP)) {
+        match(Token::LPAREN);
+        list<Exp*> values;
+        values.push_back(parseCExp());
+        while (match(Token::COMMA)) {
+            values.push_back(parseCExp());
+        }
+        match(Token::RPAREN);
+        return new MinExp(values);
+    } else if (match(Token::POW_OP)) {
+        match(Token::LPAREN);
+        Exp* base = parseCExp();
+        match(Token::COMMA);
+        Exp* exponent = parseCExp();
+        match(Token::RPAREN);
+        return new PowExp(base, exponent);
     }
     else {
         throw runtime_error("Error sintáctico");

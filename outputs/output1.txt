@@ -1,14 +1,10 @@
 === STDOUT ===
 Parseo exitoso
 Codigo:
-x = 10
-y = 30
-xd = 2
-print(x + y + xd)
-print(22)
+x = abs(15 - 5000)
+print(x)
 
-Interprete:42
-22
+Interprete:4985
 0
 
 === STDERR ===

@@ -44,6 +44,22 @@ SqrtExp::SqrtExp(Exp* v) : value(v) {}
 SqrtExp::~SqrtExp() {}
 
 
+PowExp::PowExp(Exp* b, Exp* e) : base(b), exponent(e) {}
+PowExp::~PowExp() {
+    delete base;
+    delete exponent;
+}
+
+AbsExp::AbsExp(Exp* v) : value(v) {}
+AbsExp::~AbsExp() {}
+
+MinExp::MinExp(list<Exp*> v) : values(v) {}
+MinExp::~MinExp() {
+    for (Exp* exp : values) {
+        delete exp;
+    }
+}
+
 // ------------------------------------------------
 
 

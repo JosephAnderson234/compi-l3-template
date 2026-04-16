@@ -20,6 +20,9 @@ public:
     virtual int visit(Program* p) = 0;
     virtual int visit(PrintStmt* stm) = 0;
     virtual int visit(AssignStmt* stm) = 0;
+    virtual int visit(PowExp* exp) = 0;
+    virtual int visit(AbsExp* exp) = 0;
+    virtual int visit(MinExp* exp) = 0;
 };
 
 class PrintVisitor : public Visitor {
@@ -32,6 +35,9 @@ public:
     int visit(Program* p) override;
     int visit(PrintStmt* stm) override;
     int visit(AssignStmt* stm) override;
+    int visit(PowExp* exp) override;
+    int visit(AbsExp* exp) override;
+    int visit(MinExp* exp) override;
     void imprimir(Program* program);
 };
 
@@ -44,6 +50,10 @@ public:
     int visit(Program* p) override;
     int visit(PrintStmt* stm) override;
     int visit(AssignStmt* stm) override;
+    int visit(PowExp* exp) override;
+    int visit(AbsExp* exp) override;
+    int visit(MinExp* exp) override;
+
     void interprete(Program* program);
 };
 
