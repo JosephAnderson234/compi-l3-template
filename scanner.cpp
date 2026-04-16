@@ -72,7 +72,7 @@ Token* Scanner::nextToken() {
         if (lexema=="abs") return new Token(Token::ABS_OP, input, first, current - first);
         if (lexema=="min") return new Token(Token::MIN_OP, input, first, current - first);
         if (lexema=="max") return new Token(Token::Max, input, first, current - first);
-        if (lexema=="ifExpr") return new Token(Token::If_Exp, input, first, current - first);
+        if (lexema=="if") return new Token(Token::If_Exp, input, first, current - first);
         else return new Token(Token::ID, input, first, current - first);
     }
     // Operadores

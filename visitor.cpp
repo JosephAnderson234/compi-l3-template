@@ -549,14 +549,19 @@ int AstVisitor::visit(IfExp* exp){
     int myId = id++;
     out << "  node" << myId << " [label=\"if\"];\n";
     if (exp->cond) {
-        int childId = id;
+        int condId = id;
         exp->cond->accept(this);
-        out << "  node" << myId << " -> node" << childId << ";\n";
+        out << "  node" << myId << " -> node" << condId << " [label=\"cond\"];\n";
     }
     if (exp->thenExp) {
-        int childId = id;
+        int thenId = id;
         exp->thenExp->accept(this);
-        out << "  node" << myId << " -> node" << childId << ";\n";
+        out << "  node" << myId << " -> node" << thenId << " [label=\"then\"];\n";
+    }
+    if (exp->elseExp) {
+        int elseId = id;
+        exp->elseExp->accept(this);
+        out << "  node" << myId << " -> node" << elseId << " [label=\"else\"];\n";
     }
     return 0;
 }
