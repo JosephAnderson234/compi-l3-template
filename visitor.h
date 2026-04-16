@@ -24,7 +24,9 @@ public:
     virtual int visit(AbsExp* exp) = 0;
     virtual int visit(MinExp* exp) = 0;
     virtual int visit(LiteralExp* exp) = 0;
-    
+    virtual int visit(MaxExp* exp) = 0;
+    virtual int visit(IfExp* exp) = 0;
+    virtual int visit(UnaryExp* exp) = 0;
 };
 
 class PrintVisitor : public Visitor {
@@ -41,6 +43,9 @@ public:
     int visit(AbsExp* exp) override;
     int visit(MinExp* exp) override;
     int visit(LiteralExp* exp) override;
+    int visit(MaxExp* exp) override;
+    int visit(IfExp* exp) override;
+    int visit(UnaryExp* exp) override;
     void imprimir(Program* program);
 };
 
@@ -57,6 +62,9 @@ public:
     int visit(AbsExp* exp) override;
     int visit(MinExp* exp) override;
     int visit(LiteralExp* exp) override;
+    int visit(MaxExp* exp) override;
+    int visit(IfExp* exp) override;
+    int visit(UnaryExp* exp) override;
     void interprete(Program* program);
 };
 
@@ -74,6 +82,10 @@ public:
     int visit(PowExp* exp) override;
     int visit(AbsExp* exp) override;
     int visit(MinExp* exp) override;
+    int visit(LiteralExp* exp) override;
+    int visit(MaxExp* exp) override;
+    int visit(IfExp* exp) override;
+    int visit(UnaryExp* exp) override;
 
     void arbol(Program* program);
 };
