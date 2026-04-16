@@ -249,18 +249,15 @@ Exp *Parser::parseF()
         match(Token::COMMA);
         Exp *falseBranch = parseCExp();
         match(Token::RPAREN);
-        // Aquí podrías crear una nueva clase IfExp que herede de Exp para representar esta expresión
-        // return new IfExp(condition, trueBranch, falseBranch);
-         throw runtime_error("Error sintáctico: 'if' no implementado");
+        return new IfExp(condition, trueBranch, falseBranch);
     } else if (match(Token::MINUS)){
         match(Token::LPAREN);
         Exp *value = parseCExp();
         match(Token::RPAREN);
-
-        throw runtime_error("Error sintáctico: 'min' no implementado");
+        return new UnaryExp(value, NEG_OP);
     } else if (match(Token::Max)){
         match(Token::LPAREN);
-        list<Exp *> values;
+        vector<Exp *> values;
         values.push_back(parseCExp());
         while (match(Token::COMMA))
         {
@@ -268,7 +265,7 @@ Exp *Parser::parseF()
         }
         match(Token::RPAREN);
 
-        throw runtime_error("Error sintáctico: 'max' no implementado");
+        return new MaxExp(values);
     }
     else
     {

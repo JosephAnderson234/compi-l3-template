@@ -21,6 +21,11 @@ enum BinaryOp
     POW_OP
 };
 
+enum UnaryOp
+{
+    NEG_OP
+};  
+
 // Clase abstracta Exp
 class Exp
 {
@@ -142,8 +147,29 @@ class MaxExp : public Exp
 public:
     vector<Exp *> values;
     int accept(Visitor *visitor);
-    MaxExp(Vector<Exp*> v);
+    MaxExp(vector<Exp*> v);
     ~MaxExp();
+};
+
+class IfExp : public Exp
+{
+public:
+    Exp *cond;
+    Exp *thenExp;
+    Exp *elseExp;
+    int accept(Visitor *visitor);
+    IfExp(Exp *c, Exp *t, Exp *e);
+    ~IfExp();
+};
+
+class UnaryExp : public Exp
+{
+public:
+    UnaryOp op;
+    Exp *value;
+    int accept(Visitor *visitor);
+    UnaryExp(Exp *v, UnaryOp op);
+    ~UnaryExp();
 };
 
 class Program
