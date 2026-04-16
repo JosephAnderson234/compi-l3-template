@@ -60,6 +60,10 @@ MinExp::~MinExp() {
     }
 }
 
+
+LiteralExp::LiteralExp(string v) : value(v) {}
+LiteralExp::~LiteralExp() {}
+
 // ------------------------------------------------
 
 
@@ -68,7 +72,7 @@ Program::~Program() {}
 Stmt::~Stmt(){}
 PrintStmt::~PrintStmt() {}
 AssignStmt::~AssignStmt() {}
-PrintStmt::PrintStmt(Exp *exp) {e=exp;}
+PrintStmt::PrintStmt(list<Exp*> exp) {values=exp;}
 AssignStmt::AssignStmt(Exp *exp, string ide) {e=exp;id=ide;}
 
 
